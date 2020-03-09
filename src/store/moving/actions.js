@@ -3,17 +3,39 @@
  * Date: 17/3/15
  */
 import {Utils} from '../../../src/common/util'
+import {JavaUtils} from '../../../src/common/java'
 
 let utils = new Utils()
+let javaUtils = new JavaUtils()
+
 export const actions = {
+
   /**
    * 获取电影列表
    * @param commit
    */
   getMoving ({commit, state}) {
-    utils.get('/movie/in_theaters', {city: state.city}).then(res => {
-      commit('MOVING_LIST', {list: res})
-      commit('MOVING_LOADING', {loading: false})
+    console.log(state.city)
+    javaUtils.get('/movie/in_theaters/find', {city: state.city}).then(res => {
+      console.log(res)
+      if (res !== null && res !== '') {
+        console.log('从java查找到了')
+        commit('MOVING_LIST', {list: res})
+        commit('MOVING_LOADING', {loading: false})
+      } else {
+        console.log('从java查找为null')
+        utils.get('/movie/in_theaters', {city: state.city}).then(res => {
+          console.log(res)
+          javaUtils.post('/movie/in_theaters/save', res).then(res => {
+            console.log(typeof res)
+            var str = JSON.stringify(res)
+            console.log(typeof str)
+            console.log('save')
+          })
+          commit('MOVING_LIST', {list: res})
+          commit('MOVING_LOADING', {loading: false})
+        })
+      }
     })
   },
   /**
@@ -78,6 +100,11 @@ export const actions = {
   getMovieList ({commit, state}) {
     utils.get(`/movie/subject/${state.id}/comments`, {}).then(res => {
       commit('MOVIE_COMMENT', {comment: res})
+    })
+  },
+  userLogin ({commit, state}) {
+    utils.get(`/`, {}).then(res => {
+      commit('SEARCH_LIST', {searchList: res})
     })
   }
 }
