@@ -4,18 +4,32 @@
  */
 import Vue from 'vue'
 import $http from 'vue-resource'
+
 Vue.use($http)
 
 let vm = new Vue()
 
-const configPath = '/api'
+const configPath = '/search'
 window.configPath = configPath
 
-export class Utils {
+export class SeachUtils {
   get (url, data = {}) {
     url = configPath + url
     return new Promise((resolve, reject) => {
       vm.$http.get(url, {params: data, credentials: true}).then((response) => {
+        resolve(response.body)
+      }, function () {
+        console.log('接口异常')
+      })
+    })
+  }
+
+  searchList (url, data = {}) {
+    url = configPath + url
+    return new Promise((resolve, reject) => {
+      vm.$http.get(url, {params: data, credentials: true}).then((response) => {
+        console.log(response)
+        console.log(response.body)
         resolve(response.body)
       }, function () {
         console.log('接口异常')

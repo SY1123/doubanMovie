@@ -4,10 +4,11 @@
  */
 import {Utils} from '../../../src/common/util'
 import {JavaUtils} from '../../../src/common/java'
+import {SeachUtils} from '../../../src/common/search'
 
 let utils = new Utils()
 let javaUtils = new JavaUtils()
-
+let searchUtils = new SeachUtils()
 export const actions = {
 
   /**
@@ -26,7 +27,7 @@ export const actions = {
         console.log('从java查找为null')
         utils.get('/movie/in_theaters', {city: state.city}).then(res => {
           console.log(res)
-          javaUtils.post('/movie/in_theaters/save', res).then(res => {
+          javaUtils.post('/movie/save', res).then(res => {
             console.log(typeof res)
             var str = JSON.stringify(res)
             console.log(typeof str)
@@ -54,10 +55,24 @@ export const actions = {
    * @param state
    */
   getUpcoming ({commit, state}) {
-    utils.get('/movie/coming_soon', {city: state.city, start: state.upcomBody.start + 1}).then(res => {
-      if (state.upcomBody.subjects && state.upcomBody.subjects.length) {
-        res.subjects = state.upcomBody.subjects.concat(res.subjects)
-        commit('PAGE_LOAD', {pageload: false})
+    javaUtils.get('/movie/upcoming', {}).then(res => {
+      if (res === null || res === '') {
+        utils.get('/movie/coming_soon', {city: state.city, start: state.upcomBody.start + 1}).then(res => {
+          if (state.upcomBody.subjects && state.upcomBody.subjects.length) {
+            res.subjects = state.upcomBody.subjects.concat(res.subjects)
+            commit('PAGE_LOAD', {pageload: false})
+          }
+          // res.start = state.upcomBody.start + 1;
+          // console.log(res,state.upcomBody)
+          javaUtils.post('/movie/save', res).then(res => {
+            console.log(typeof res)
+            var str = JSON.stringify(res)
+            console.log(typeof str)
+            console.log('save')
+          })
+          commit('UP_COMBODY', {upcomBody: res})
+          commit('UP_COMING', {loading: false})
+        })
       }
       // res.start = state.upcomBody.start + 1;
       // console.log(res,state.upcomBody)
@@ -71,13 +86,26 @@ export const actions = {
    * @param state
    */
   loadingtop250 ({commit, state}) {
-    utils.get('/movie/top250', {start: state.start, count: 10}).then(res => {
-      let subject = state.ranking250.subjects
-      if (subject !== undefined) {
-        res.subjects = subject.concat(res.subjects)
+    javaUtils.get('/movie/top250', {}).then(res => {
+      if (res !== null && res !== '') {
+        commit('LOAD_TOP250', {ranking250: res})
+        commit('MOVING_LOADING', {loading: false})
+      } else {
+        utils.get('/movie/top250', {start: state.start, count: 10}).then(res => {
+          let subject = state.ranking250.subjects
+          if (subject !== undefined) {
+            res.subjects = subject.concat(res.subjects)
+          }
+          javaUtils.post('/movie/save', res).then(res => {
+            console.log(typeof res)
+            var str = JSON.stringify(res)
+            console.log(typeof str)
+            console.log('save')
+          })
+          commit('LOAD_TOP250', {ranking250: res})
+          commit('MOVING_LOADING', {loading: false})
+        })
       }
-      commit('LOAD_TOP250', {ranking250: res})
-      commit('MOVING_LOADING', {loading: false})
     })
   },
   /**
@@ -87,7 +115,7 @@ export const actions = {
    */
   getSearchList ({commit, state}) {
     console.log(state.searchText)
-    utils.get('/movie/search', {q: state.searchText}).then(res => {
+    searchUtils.searchList('/search_subjects', {tag: state.searchText}).then(res => {
       commit('SEARCH_LIST', {searchList: res})
       commit('SEARCH_LOADING', {loading: false})
     })

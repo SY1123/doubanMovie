@@ -28,9 +28,11 @@ export const getters = {
     return state.loadingUpComing
   },
   searchList: state => {
+    /*
     for (let subject of state.searchList.subjects) {
       subject.rating.average = subject.rating.average / 2
     }
+    */
     return state.searchList
   },
   searchText: state => {

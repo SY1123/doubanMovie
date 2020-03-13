@@ -5,7 +5,7 @@
         <ul>
           <li class="film-pic">
             <a @click="showDetail(subject.id)">
-              <img class="movieImg"  :src="subject.images.large" alt="">
+              <img class="movieImg"  :src="getImageUrl(subject.images.large)" alt="">
             </a>
           </li>
           <li class="film-name">
@@ -20,7 +20,7 @@
           </li>
           <li class="film-button">
         <span>
-          <a href="">特惠选座</a>
+          <a @click="showDetail(subject.id)">查看详情</a>
         </span>
           </li>
         </ul>
@@ -53,6 +53,9 @@ export default{
     showDetail (id) {
       this.$store.commit('DETAIL_LOADING', {loading: true})
       this.$router.push({path: '/moviesDetail', query: {id: id}})
+    },
+    getImageUrl (url) {
+      return '//images.weserv.nl/?url=' + url
     }
   },
   computed: {
@@ -70,12 +73,12 @@ export default{
   margin: 10px auto 0;
   min-height: 500px;
   .movie-container{
-    width: 560px;
+    width: 900px;
     border-top: 1px dashed #ccc;
     margin-top: -10px;
     .movieTag{
       padding-top: 20px;
-      width: 118px;
+      width: 130px;
       height: 270px;
       overflow: hidden;
       font-size: 12px;

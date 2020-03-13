@@ -8,9 +8,10 @@
             <a class="el-dropdown-link">
               [切换城市]
             </a>
-              <el-dropdown-menu slot="dropdown" >
-                <el-dropdown-item v-for="(city,index) in citys" :command="city.name" :key="index">{{city.name}}</el-dropdown-item>
-              </el-dropdown-menu>
+            <el-dropdown-menu slot="dropdown">
+              <el-dropdown-item v-for="(city,index) in citys" :command="city.name" :key="index">{{city.name}}
+              </el-dropdown-item>
+            </el-dropdown-menu>
           </el-dropdown>
         </div>
       </div>
@@ -25,9 +26,9 @@
         </div>
       </div>
     </article>
-    <aside class="right-side">
-      尴尬乌龙丨第89届奥斯卡获奖影片
-    </aside>
+    <!-- <aside class="right-side">
+       尴尬乌龙丨第89届奥斯卡获奖影片
+     </aside>-->
   </div>
 </template>
 
@@ -125,7 +126,7 @@
 
   .container {
     float: left;
-    width: 590px;
+    width: 1000px;
   }
 
   .right-side {
@@ -139,11 +140,13 @@
 
   .tit {
     margin-top: 20px;
+
     h1 {
       display: inline-block;
       font-size: 20px;
       color: #000;
     }
+
     .locat {
       position: relative;
       display: inline-block;
@@ -160,6 +163,7 @@
       background: #fff;
       z-index: 999;
       border: 1px solid #ccc;
+
       span {
         display: block;
       }
@@ -168,10 +172,12 @@
 
   .tab-hd {
     vertical-align: bottom;
+
     li {
       margin: 0 5px;
       float: left;
     }
+
     .on {
       background-color: #69c;
       color: #fff;
@@ -182,7 +188,7 @@
     }
   }
 
-  .load-more{
+  .load-more {
     text-align: center;
   }
 </style>

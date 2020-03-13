@@ -41,6 +41,13 @@ module.exports = {
         pathRewrite: {
           '^/java': ''
         }
+      },
+      '/search': {
+        target: 'https://movie.douban.com/j',
+        changeOrigin: true,
+        pathRewrite: {
+          '^/search': ''
+        }
       }
     },
     // CSS Sourcemaps off by default because relative paths are "buggy"
