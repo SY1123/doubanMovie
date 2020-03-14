@@ -1,12 +1,12 @@
 <template>
   <div class="search-tag">
     <a class="search-img" @click="showDetail(subject.id)">
-      <img class="search-tag-img movieImg" :src="getImageUrl(subject.cover)">
+      <img class="search-tag-img movieImg" :src="getImageUrl(subject.images.large)">
     </a>
 
     <div class="search-brief">
-      <p class="title" @click="showDetail(subject.id)">{{subject.title}}<!--/<span>{{subject.original_title}}</span>--></p>
-<!--      <p class="disc">
+      <p class="title" @click="showDetail(subject.id)">{{subject.title}}/<span>{{subject.original_title}}</span></p>
+      <p class="disc">
         {{subject.year}}年
         <br>
         <span v-for="pubdate in subject.pubdates">
@@ -26,14 +26,14 @@
         <span v-for="cast in subject.casts">
           /{{cast.name}}
         </span>
-      </p>-->
+      </p>
       <p class="rate">
         <el-rate
-          v-model="subject.rate"
+          v-model="subject.rating.average"
           disabled
           text-color="#ff9900">
         </el-rate>
-        <span class="rate-value">{{subject.rate}}</span>
+        <span class="rate-value">{{subject.rating.average}}</span>
       </p>
     </div>
   </div>

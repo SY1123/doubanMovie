@@ -11,7 +11,8 @@
       <ul>
         <li class="dt">{{item.mainland_pubdate}}</li>
         <li class="dt"><em v-for="it in item.genres">{{it}}/</em></li>
-        <li class="dt"><span v-for=" cast in item.casts">{{cast.name}}/</span></li>
+        <li class="dt">演员:<span v-for=" cast in item.casts">{{cast.name}}/</span></li>
+        <li class="dt">导演:<span v-for=" director in item.directors">{{director.name}}/</span></li>
         <li class="dt last"><span class="">{{item.collect_count}}人想看</span></li>
         <!--
                 <a href="https://movie.douban.com/trailer/211279/#content" class="trailer_icon">预告片</a>

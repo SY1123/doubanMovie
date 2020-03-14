@@ -6,11 +6,9 @@
 
 <script>
 
-  export default{
+  export default {
     data () {
-      return {
-
-      }
+      return {}
     },
     mounted () {
       if (this.searchText === '') {
@@ -38,7 +36,7 @@
   }
 </script>
 <style rel="stylesheet/less" lang="less">
-  .search-list{
+  .search-list {
     width: 950px;
     min-height: 500px;
     margin: 30px auto;

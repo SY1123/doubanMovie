@@ -52,5 +52,8 @@ export const mutations = {
   },
   [types.MOVIE_COMMENT] (state, {comment}) {
     state.movieComment = comment
+  },
+  [types.TOP250_LOADING] (state, {loading}) {
+    state.TOP250_LOADING = loading
   }
 }

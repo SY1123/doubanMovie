@@ -36,7 +36,7 @@ module.exports = {
         }
       },
       '/java': {
-        target: 'http://localhost:8080',
+        target: 'http://localhost:8001',
         changeOrigin: true,
         pathRewrite: {
           '^/java': ''

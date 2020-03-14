@@ -84,13 +84,32 @@ export const actions = {
    * 获取排名250
    * @param commit
    * @param state
+   *     /*
+   utils.get('/movie/top250', {start: state.start, count: 10}).then(res => {
+       let subject = state.ranking250.subjects
+       if (subject !== undefined) {
+         res.subjects = subject.concat(res.subjects)
+       }
+       javaUtils.post('/movie/save', res).then(res => {
+         console.log(typeof res)
+         var str = JSON.stringify(res)
+         console.log(typeof str)
+         console.log('save')
+       })
+       commit('LOAD_TOP250', {ranking250: res})
+       commit('MOVING_LOADING', {loading: false})
+     })
    */
   loadingtop250 ({commit, state}) {
+    console.log('begin to find 250')
     javaUtils.get('/movie/top250', {}).then(res => {
+      console.log('java')
+      console.log(res)
       if (res !== null && res !== '') {
         commit('LOAD_TOP250', {ranking250: res})
-        commit('MOVING_LOADING', {loading: false})
+        console.log('find top 250 from java' + this.$store.getters.ranking250)
       } else {
+        console.log('utils')
         utils.get('/movie/top250', {start: state.start, count: 10}).then(res => {
           let subject = state.ranking250.subjects
           if (subject !== undefined) {
