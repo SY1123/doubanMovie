@@ -18,20 +18,16 @@ export const actions = {
   getMoving ({commit, state}) {
     console.log(state.city)
     javaUtils.get('/movie/in_theaters/find', {city: state.city}).then(res => {
-      console.log(res)
       if (res !== null && res !== '') {
-        console.log('从java查找到了')
         commit('MOVING_LIST', {list: res})
         commit('MOVING_LOADING', {loading: false})
       } else {
-        console.log('从java查找为null')
         utils.get('/movie/in_theaters', {city: state.city}).then(res => {
           console.log(res)
-          javaUtils.post('/movie/save', res).then(res => {
+          javaUtils.post('/movie/save_movie', res).then(res => {
             console.log(typeof res)
             var str = JSON.stringify(res)
             console.log(typeof str)
-            console.log('save')
           })
           commit('MOVING_LIST', {list: res})
           commit('MOVING_LOADING', {loading: false})
@@ -45,6 +41,9 @@ export const actions = {
    */
   getMovieDetail ({commit, state}) {
     utils.get(`/movie/subject/${state.id}`, {}).then(res => {
+      javaUtils.post('/movie/save_detail', res).then(res => {
+        console.log('save detail')
+      })
       commit('DETAIL_LOADING', {loading: false})
       commit('MOVING_DETAIL', {movieDetail: res})
     })
@@ -64,7 +63,7 @@ export const actions = {
           }
           // res.start = state.upcomBody.start + 1;
           // console.log(res,state.upcomBody)
-          javaUtils.post('/movie/save', res).then(res => {
+          javaUtils.post('/movie/save_movie', res).then(res => {
             console.log(typeof res)
             var str = JSON.stringify(res)
             console.log(typeof str)
@@ -90,7 +89,7 @@ export const actions = {
        if (subject !== undefined) {
          res.subjects = subject.concat(res.subjects)
        }
-       javaUtils.post('/movie/save', res).then(res => {
+       javaUtils.post('/movie/save_movie', res).then(res => {
          console.log(typeof res)
          var str = JSON.stringify(res)
          console.log(typeof str)
@@ -115,7 +114,7 @@ export const actions = {
           if (subject !== undefined) {
             res.subjects = subject.concat(res.subjects)
           }
-          javaUtils.post('/movie/save', res).then(res => {
+          javaUtils.post('/movie/save_movie', res).then(res => {
             console.log(typeof res)
             var str = JSON.stringify(res)
             console.log(typeof str)
@@ -146,12 +145,47 @@ export const actions = {
    */
   getMovieList ({commit, state}) {
     utils.get(`/movie/subject/${state.id}/comments`, {}).then(res => {
+      console.log('commment' + res)
+      console.log(res)
       commit('MOVIE_COMMENT', {comment: res})
     })
   },
+  /**
+   * 用户登录
+   * @param commit
+   * @param state
+   */
   userLogin ({commit, state}) {
-    utils.get(`/`, {}).then(res => {
-      commit('SEARCH_LIST', {searchList: res})
+    javaUtils.post('/user/login', {username: state.username, password: state.password}).then(res => {
+      console.log(res)
+      if (res.message === 'error') {
+        alert('登录失败')
+      } else {
+        alert('登录success')
+        commit('USERNAME', {username: state.username})
+        commit('isLogin', {isLogin: 1})
+        commit('userId', {userId: state.userId()})
+        commit('loginVisible', {loginVisible: false})
+      }
+    })
+  },
+  /**
+   * 用户注册
+   * @param commit
+   * @param state
+   */
+  userRegister ({commit, state}) {
+    javaUtils.post('/user/register', {username: state.username, password: state.password, email: state.email}).then(res => {
+      console.log(res)
+      if (res.message === 'error') {
+        alert('登录失败')
+      } else {
+        alert('登录success')
+        commit('USERNAME', {username: state.username})
+        commit('isLogin', {isLogin: 1})
+        commit('userId', {userId: state.userId()})
+        commit('loginVisible', {loginVisible: false})
+      }
     })
   }
 }

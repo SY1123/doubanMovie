@@ -19,3 +19,13 @@ export const SEARCH_LIST = 'SEARCH_LIST'
 export const PAGE_START = 'PAGE_START'
 export const MOVIE_COMMENT = 'MOVIE_COMMENT'
 export const TOP250_LOADING = 'TOP250_LOADING'
+/*
+login/register related
+*/
+export const USERNAME = 'USERNAME'
+export const PASSWORD = 'PASSWORD'
+export const EMAIL = 'EMAIL'
+export const registerVisible = 'registerVisible'
+export const loginVisible = 'loginVisible'
+export const isLogin = 'isLogin'
+export const userId = 'userId'

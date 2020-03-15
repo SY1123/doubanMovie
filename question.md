@@ -12,7 +12,11 @@ apiKey '0df993c66c0c636e29ecbb5344252a4a`<br>
 - fix (https://images.weserv.nl/docs/#how-it-works)<br>
 ***
 
-
+#仍需做
+***
+1.用户登录注册<br>
+2.用户行为数据，埋点<br>
+***
 #todo待优化点
 ***
 1.演员导演，可展示详细信息<br>
@@ -21,3 +25,37 @@ apiKey '0df993c66c0c636e29ecbb5344252a4a`<br>
 
 
 (https://api.douban.com/v2/movie/imdb/tt0111161?apikey=0df993c66c0c636e29ecbb5344252a4a)
+
+#用户行为日志设计
+***
+- 如何表示用户
+```text
+user id
+产生行为的用户
+item id
+产生行为的对象
+behavior type
+行为的种类(如购买还是浏览)
+context
+产生行为的上下文，包括时间和地点
+behavior weight
+行为的权重(用户评分、观看时长等)
+behavior content
+行为的内容(评论文本、标签等)
+```
+
+- 数据集的一般分类
+```text
+无上下文信息的隐性反馈数据集
+包含 user id, item id
+如 Book-Crossing
+无上下文信息的显性反馈数据集
+包含 user id, item id, 物品评分
+有上下文信息的隐性反馈数据集
+包含 user id, item id, 用户对物品产生行为的 timestamp
+如 Lastfm
+有上下文信息的显性反馈数据集
+包含 user id, item id, 物品评分, 用户对物品产生行为的 timestamp
+如 Netflix Prize
+```
+***

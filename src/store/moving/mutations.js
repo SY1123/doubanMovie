@@ -3,6 +3,7 @@
  * Date: 17/3/15
  */
 import * as types from './types'
+
 export const mutations = {
   [types.MOVING_TITLE] (state, {title}) {
     state.title = title
@@ -55,5 +56,26 @@ export const mutations = {
   },
   [types.TOP250_LOADING] (state, {loading}) {
     state.TOP250_LOADING = loading
+  },
+  [types.USERNAME] (state, {username}) {
+    state.username = username
+  },
+  [types.PASSWORD] (state, {password}) {
+    state.password = password
+  },
+  [types.loginVisible] (state, {loginVisible}) {
+    state.loginVisible = loginVisible
+  },
+  [types.registerVisible] (state, {registerVisible}) {
+    state.registerVisible = registerVisible
+  },
+  [types.isLogin] (state, {isLogin}) {
+    state.isLogin = isLogin
+  },
+  [types.userId] (state, {userId}) {
+    state.userId = userId
+  },
+  [types.EMAIL] (state, {EMAIL}) {
+    state.email = EMAIL
   }
 }

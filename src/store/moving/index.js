@@ -5,6 +5,7 @@
 import {getters} from './getters'
 import {actions} from './actions'
 import {mutations} from './mutations'
+
 const state = {
   title: 'doubanMovie', // App 标题
   movingList: {  // 正在上映列表
@@ -30,7 +31,14 @@ const state = {
   },
   id: '', // 电影ID
   start: 0, // top 250分页起点
-  movieComment: {} // 电影短评
+  movieComment: {}, // 电影短评
+  username: '',
+  password: '',
+  loginVisible: false,
+  registerVisible: false,
+  isLogin: 0,
+  userId: 0,
+  email: ''
 }
 
 export default {

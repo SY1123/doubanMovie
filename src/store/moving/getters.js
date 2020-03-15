@@ -59,6 +59,24 @@ export const getters = {
   },
   movieComment: state => {
     return state.movieComment
+  },
+  username: state => {
+    return state.username
+  },
+  loginVisible: state => {
+    return state.loginVisible
+  },
+  registerVisible: state => {
+    return state.registerVisible
+  },
+  isLogin: state => {
+    return state.isLogin
+  },
+  userId: state => {
+    return state.userId
+  },
+  EMAIL: state => {
+    return state.email
   }
 
 }

@@ -8,42 +8,8 @@
             <el-button slot="append" icon="search" @click="searchMovie"></el-button>
           </el-input>
         </div>
-        <el-button @click="loginVisible = true">登录</el-button>
-        <el-button @click="registerVisible = true">注册</el-button>
       </div>
     </div>
-    <el-dialog title="登录" :visible.sync="loginVisible">
-      <el-form :model="ruleForm" status-icon :rules="rules" ref="loginForm" label-width="80px" class="loginForm">
-        <el-form-item label="用户名" prop="name">
-          <el-input type="password" v-model="loginForm.name" autocomplete="off"></el-input>
-        </el-form-item>
-        <el-form-item label="密码">
-          <el-input type="password" v-model="loginForm.checkPass" autocomplete="off"></el-input>
-        </el-form-item>
-        <el-form-item>
-          <el-button type="primary" @click="login('loginForm')">提交</el-button>
-          <el-button @click="resetForm('loginForm')">重置</el-button>
-        </el-form-item>
-      </el-form>
-    </el-dialog>
-    <el-dialog title="注册" :visible.sync="registerVisible">
-      <el-form :model="registerForm" status-icon :rules="rules" ref="registerForm" label-width="80px"
-               class="registerForm">
-        <el-form-item label="密码" prop="pass">
-          <el-input type="password" v-model="registerForm.pass" autocomplete="off"></el-input>
-        </el-form-item>
-        <el-form-item label="确认密码" prop="checkPass">
-          <el-input type="password" v-model="registerForm.checkPass" autocomplete="off"></el-input>
-        </el-form-item>
-        <el-form-item label="用户名" prop="name">
-          <el-input v-model.number="registerForm.name"></el-input>
-        </el-form-item>
-        <el-form-item>
-          <el-button type="primary" @click="submitForm('registerForm')">提交</el-button>
-          <el-button @click="resetForm('registerForm')">重置</el-button>
-        </el-form-item>
-      </el-form>
-    </el-dialog>
     <div class="douban-bar">
       <ul>
         <li v-for="bar in barList" @click="choiceUrl(bar.title)">
@@ -59,50 +25,8 @@
 <script>
   export default {
     data () {
-      var checkName = (rule, value, callback) => {
-        if (value === '') {
-          return callback(new Error('用户名不能为空'))
-        }
-        /*
-        else {
-          callback()
-        }
-        */
-        setTimeout(() => {
-          if (!Number.isInteger(value)) {
-            callback(new Error('请输入数字值'))
-          } else {
-            if (value < 18) {
-              callback(new Error('必须年满18岁'))
-            } else {
-              callback()
-            }
-          }
-        }, 1000)
-      }
-      var validatePass = (rule, value, callback) => {
-        if (value === '') {
-          callback(new Error('请输入密码'))
-        } else {
-          if (this.registerForm.checkPass !== '') {
-            this.$refs.registerForm.validateField('checkPass')
-          }
-          callback()
-        }
-      }
-      var validatePass2 = (rule, value, callback) => {
-        if (value === '') {
-          callback(new Error('请再次输入密码'))
-        } else if (value !== this.registerForm.pass) {
-          callback(new Error('两次输入密码不一致!'))
-        } else {
-          callback()
-        }
-      }
       return {
         content: '',
-        loginVisible: false,
-        registerVisible: false,
         title: '正在热映',
         barList: [{
           title: '正在热映',
@@ -113,27 +37,7 @@
         }, {
           title: 'Top250',
           url: '/top250'
-        }],
-        registerForm: {
-          pass: '',
-          checkPass: '',
-          name: ''
-        },
-        loginForm: {
-          name: '',
-          pass: ''
-        },
-        rules: {
-          pass: [
-            {validator: validatePass, trigger: 'blur'}
-          ],
-          checkPass: [
-            {validator: validatePass2, trigger: 'blur'}
-          ],
-          name: [
-            {validator: checkName, trigger: 'blur'}
-          ]
-        }
+        }]
       }
     },
     methods: {
@@ -145,30 +49,6 @@
         this.$store.dispatch('getSearchList')
         this.$store.commit('SEARCH_LOADING', {loading: true})
         this.$router.push({path: '/search', query: {searchText: this.content}})
-      },
-      submitForm (formName) {
-        this.$refs[formName].validate((valid) => {
-          if (valid) {
-            alert('submit!')
-          } else {
-            console.log('error submit!!')
-            return false
-          }
-        })
-      },
-      resetForm (formName) {
-        this.$refs[formName].resetFields()
-      },
-      login (formName) {
-        this.$refs[formName].validate((valid) => {
-          if (valid) {
-            alert('login!')
-            this.$store.dispatch('userLogin')
-          } else {
-            console.log('error submit!!')
-            return false
-          }
-        })
       }
     }
   }
@@ -245,24 +125,6 @@
           margin-top: 10px;
         }
       }
-    }
-
-    .el-dialog--small {
-      width: 30%;
-    }
-
-    .customed {
-      display: inline-block;
-      line-height: 1;
-      white-space: nowrap;
-      cursor: pointer;
-      background: #fff;
-      border: 1px solid #c4c4c4;
-      color: #1f2d3d;
-      margin: 10px;
-      padding: 10px 15px;
-      border-radius: 4px;
-      float: right;
     }
   }
 </style>

@@ -16,12 +16,13 @@
               </div>
               <div class="info">
                 <span class="p1">导演: </span><span v-for="item in movieDetail.directors"
-                                                  class="attrs">{{item.name}}</span><br>
+                                                  class="attrs">{{item.name}}/</span><br>
                 <span class="p1">主演: </span><span v-for="item in movieDetail.casts"
                                                   class="attrs">{{item.name}}/</span><br>
                 <span class="p1">类型: </span><span v-for="item in movieDetail.genres" class="attrs">{{item}}/</span><br>
                 <span class="p1">制片国家/地区: </span><span v-for="(item,index) in movieDetail.countries" class="attrs">{{item}}</span><br>
-                <span class="p1">IMDb链接: </span><span class="attrs"></span><br>
+                <span class="p1">标签: </span><span v-for="(item,index) in movieDetail.tags" class="attrs">{{item}}/</span><br>
+
               </div>
             </div>
             <div class="people-sroce">
@@ -61,9 +62,9 @@
               <li><img
                 src="https://img3.doubanio.com/f/shire/61cc48ba7c40e0272d46bb93fe0dc514f3b71ec5/pics/add-doulist.gif"
                 alt=""><a href="">提问题</a></li>
-              <li><img
+            <!--  <li><img
                 src="https://img3.doubanio.com/f/shire/61cc48ba7c40e0272d46bb93fe0dc514f3b71ec5/pics/add-doulist.gif"
-                alt=""><a href="">添加到豆列</a></li>
+                alt=""><a href="">添加到豆列</a></li>-->
               <li><img src="" alt=""><a href="">分享到</a></li>
             </ul>
           </div>

@@ -1,5 +1,6 @@
 <template>
   <div id="app">
+    <global></global>
     <Dheader></Dheader>
     <transition name="fade">
       <keep-alive exclude="moviesDetail">
@@ -10,23 +11,26 @@
 </template>
 
 <script>
-export default {
-  data () {
-    return {
-      msg: 'hello vue'
-    }
-  },
-  components: {
-    'Dheader': (resolve) => {
-      require(['./header'], resolve)
+  export default {
+    data () {
+      return {
+        msg: 'hello vue'
+      }
+    },
+    components: {
+      'Dheader': (resolve) => {
+        require(['./header'], resolve)
+      },
+      'global': (resolve) => {
+        require(['./global'], resolve)
+      }
     }
   }
-}
 </script>
 
 <style lang="less" rel="stylesheet/less">
 
-  *{
+  * {
     margin: 0;
     padding: 0;
     font-family: '微软雅黑';
