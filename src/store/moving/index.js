@@ -38,7 +38,8 @@ const state = {
   registerVisible: false,
   isLogin: 0,
   userId: 0,
-  email: ''
+  email: '',
+  tags: {}
 }
 
 export default {

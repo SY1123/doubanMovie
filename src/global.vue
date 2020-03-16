@@ -51,6 +51,15 @@
         </div>
       </div>
     </div>
+    <el-dialog>
+      <el-tag
+        v-for="tag in tags"
+        :key="tag.name"
+        closable
+        :type="tag.type">
+        {{tag.name}}
+      </el-tag>
+    </el-dialog>
   </div>
 </template>
 
@@ -107,12 +116,20 @@
           name: [
             {validator: checkName, trigger: 'blur'}
           ]
-        }
+        },
+        tags: [
+          { name: '标签一', type: '' },
+          { name: '标签二', type: 'success' },
+          { name: '标签三', type: 'info' },
+          { name: '标签四', type: 'warning' },
+          { name: '标签五', type: 'danger' }
+        ]
       }
     },
     mounted () {
       this.$store.commit('loginVisible', {loginVisible: false})
       this.$store.commit('registerVisible', {registerVisible: false})
+      this.$store.dispatch('findTags')
     },
     methods: {
       register (formName) {
@@ -134,11 +151,11 @@
       login (formName) {
         this.$refs[formName].validate((valid) => {
           if (valid) {
-            // alert('login! --- ' + formName + '  --- username --- ' + this.loginForm.name)
             this.$store.commit('USERNAME', {username: this.loginForm.name})
             this.$store.commit('PASSWORD', {password: this.loginForm.pass})
             this.$store.dispatch('userLogin')
             this.loginVisible = this.$store.getters.loginVisible
+            //检查有没有设置标签
           } else {
             console.log('error submit!!')
             this.loginVisible = this.$store.getters.loginVisible

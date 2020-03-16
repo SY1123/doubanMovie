@@ -77,5 +77,8 @@ export const mutations = {
   },
   [types.EMAIL] (state, {EMAIL}) {
     state.email = EMAIL
+  },
+  [types.tags] (state, {tags}) {
+    state.tags = tags
   }
 }

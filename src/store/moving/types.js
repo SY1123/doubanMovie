@@ -29,3 +29,5 @@ export const registerVisible = 'registerVisible'
 export const loginVisible = 'loginVisible'
 export const isLogin = 'isLogin'
 export const userId = 'userId'
+export const tags = 'tags'
+

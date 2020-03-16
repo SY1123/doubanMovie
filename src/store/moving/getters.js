@@ -77,6 +77,9 @@ export const getters = {
   },
   EMAIL: state => {
     return state.email
+  },
+  tags: state => {
+    return state.tags
   }
 
 }

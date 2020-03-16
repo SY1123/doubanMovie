@@ -158,7 +158,7 @@ export const actions = {
   userLogin ({commit, state}) {
     javaUtils.post('/user/login', {username: state.username, password: state.password}).then(res => {
       console.log(res)
-      if (res.message === 'error') {
+      if (res.code === 1) {
         alert('登录失败')
       } else {
         alert('登录success')
@@ -177,15 +177,23 @@ export const actions = {
   userRegister ({commit, state}) {
     javaUtils.post('/user/register', {username: state.username, password: state.password, email: state.email}).then(res => {
       console.log(res)
-      if (res.message === 'error') {
-        alert('登录失败')
+      if (res.code === 1) {
+        alert('注册失败')
       } else {
-        alert('登录success')
-        commit('USERNAME', {username: state.username})
-        commit('isLogin', {isLogin: 1})
-        commit('userId', {userId: state.userId()})
-        commit('loginVisible', {loginVisible: false})
+        alert('注册success, 请登录')
+        commit('registerVisible', {registerVisible: false})
       }
+    })
+  },
+  /**
+   * 随机查询所有tag标签
+   * @param commit
+   * @param state
+   */
+  findTags ({commit, state}) {
+    javaUtils.post('/tag/findRandom', {}).then(res => {
+      console.log(res.data)
+      this.$store.commit('tags', {tags: res.data})
     })
   }
 }
