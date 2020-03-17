@@ -36,10 +36,19 @@ const state = {
   password: '',
   loginVisible: false,
   registerVisible: false,
+  tagVisible: false,
   isLogin: 0,
   userId: 0,
   email: '',
-  tags: {}
+  tags: {
+    tag: []
+  },
+  userTag: {
+    tag: []
+  },
+  choiceInterestTag: {
+    tag: []
+  }
 }
 
 export default {

@@ -80,6 +80,14 @@ export const getters = {
   },
   tags: state => {
     return state.tags
+  },
+  userTag: state => {
+    return state.userTag
+  },
+  tagVisible: state => {
+    return state.tagVisible
+  },
+  choiceInterestTag: state => {
+    return state.choiceInterestTag
   }
-
 }

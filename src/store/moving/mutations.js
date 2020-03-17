@@ -80,5 +80,14 @@ export const mutations = {
   },
   [types.tags] (state, {tags}) {
     state.tags = tags
+  },
+  [types.userTag] (state, {userTag}) {
+    state.userTag = userTag
+  },
+  [types.tagVisible] (state, {tagVisible}) {
+    state.tagVisible = tagVisible
+  },
+  [types.choiceInterestTag] (state, {choiceInterestTag}) {
+    state.choiceInterestTag = choiceInterestTag
   }
 }

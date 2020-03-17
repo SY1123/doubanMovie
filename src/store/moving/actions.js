@@ -156,17 +156,18 @@ export const actions = {
    * @param state
    */
   userLogin ({commit, state}) {
-    javaUtils.post('/user/login', {username: state.username, password: state.password}).then(res => {
+    return javaUtils.post('/user/login', {username: state.username, password: state.password}).then(res => {
       console.log(res)
       if (res.code === 1) {
         alert('登录失败')
       } else {
-        alert('登录success')
         commit('USERNAME', {username: state.username})
         commit('isLogin', {isLogin: 1})
-        commit('userId', {userId: state.userId()})
+        commit('userId', {userId: res.data.id})
+        console.log('userId -- ' + res.data.id)
         commit('loginVisible', {loginVisible: false})
       }
+      return null
     })
   },
   /**
@@ -175,7 +176,11 @@ export const actions = {
    * @param state
    */
   userRegister ({commit, state}) {
-    javaUtils.post('/user/register', {username: state.username, password: state.password, email: state.email}).then(res => {
+    javaUtils.post('/user/register', {
+      username: state.username,
+      password: state.password,
+      email: state.email
+    }).then(res => {
       console.log(res)
       if (res.code === 1) {
         alert('注册失败')
@@ -193,7 +198,33 @@ export const actions = {
   findTags ({commit, state}) {
     javaUtils.post('/tag/findRandom', {}).then(res => {
       console.log(res.data)
-      this.$store.commit('tags', {tags: res.data})
+      commit('tags', {tags: res.data})
+    })
+  },
+  /**
+   * 查询用户是否设置tag标签
+   * @param commit
+   * @param state
+   */
+  existUserTag ({commit, state}) {
+    return javaUtils.post('/tag/isExist', {userId: state.userId}).then(res => {
+      console.log(res)
+      if (res.code === 0) {
+        commit('userTag', {tags: res.data})
+      } else {
+        console.log('set tagVisible')
+        commit('tagVisible', {tagVisible: true})
+      }
+    })
+  },
+  /**
+   * 保存用户感兴趣的tag标签
+   * @param commit
+   * @param state
+   */
+  saveUserInterestTag ({commit, state}) {
+    javaUtils.post('/tag/saveUserInterest', {userId: state.userId, interestTag: state.choiceInterestTag}).then(res => {
+      console.log(res.code)
     })
   }
 }
