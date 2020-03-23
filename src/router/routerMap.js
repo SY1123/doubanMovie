@@ -17,10 +17,16 @@ export default {
   },
   '/search': {
     path: 'components/searchList',
-    name: 'Search'
+    name: 'Search',
+    meta: {
+      requireAuth: true  // 该路由项需要权限校验
+    }
   },
   '/moviesDetail': {
     path: 'components/common/moviesDetail',
-    name: 'moviesDetail'
+    name: 'moviesDetail',
+    meta: {
+      requireAuth: true  // 该路由项需要权限校验
+    }
   }
 }

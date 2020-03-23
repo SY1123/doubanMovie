@@ -164,8 +164,9 @@ export const actions = {
         commit('USERNAME', {username: state.username})
         commit('isLogin', {isLogin: 1})
         commit('userId', {userId: res.data.id})
-        console.log('userId -- ' + res.data.id)
+        console.log('user -- ' + res.data + res.data.token)
         commit('loginVisible', {loginVisible: false})
+        window.localStorage.setItem('token', res.data.token)
       }
       return null
     })
@@ -176,7 +177,7 @@ export const actions = {
    * @param state
    */
   userRegister ({commit, state}) {
-    javaUtils.post('/user/register', {
+    return javaUtils.post('/user/register', {
       username: state.username,
       password: state.password,
       email: state.email
@@ -223,8 +224,37 @@ export const actions = {
    * @param state
    */
   saveUserInterestTag ({commit, state}) {
-    javaUtils.post('/tag/saveUserInterest', {userId: state.userId, interestTag: state.choiceInterestTag}).then(res => {
+    return javaUtils.post('/tag/saveUserInterest', {userId: state.userId, interestTag: state.choiceInterestTag}).then(res => {
       console.log(res.code)
+      commit('tagVisible', {tagVisible: false})
+    })
+  },
+  /**
+   * 保存用户评分
+   * @param commit
+   * @param state
+   */
+  saveUserRate ({commit, state}) {
+    if (state.userId === 0) {
+      alert('请登录')
+      return
+    }
+    console.log(state.userId)
+    console.log(state.id)
+    console.log(state.userRate)
+    javaUtils.post('/movie/save_rate', {userId: state.userId, movieId: state.id, rate: state.userRate}).then(res => {
+      console.log(res.code)
+    })
+  },
+  /**
+   * 保存用户评分
+   * @param commit
+   * @param state
+   */
+  getMovieScore ({commit, state}) {
+    return javaUtils.get('/movie/get_rate', {userId: state.userId, movieId: state.id}).then(res => {
+      console.log(res)
+      commit('userRate', {userRate: res.data})
     })
   }
 }

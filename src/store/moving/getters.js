@@ -89,5 +89,8 @@ export const getters = {
   },
   choiceInterestTag: state => {
     return state.choiceInterestTag
+  },
+  userRate: state => {
+    return state.userRate
   }
 }

@@ -33,4 +33,4 @@ export const userId = 'userId'
 export const tags = 'tags'
 export const userTag = 'userTag'
 export const choiceInterestTag = 'choiceInterestTag'
-
+export const userRate = 'userRate'

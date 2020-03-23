@@ -48,7 +48,8 @@ const state = {
   },
   choiceInterestTag: {
     tag: []
-  }
+  },
+  userRate: 0
 }
 
 export default {

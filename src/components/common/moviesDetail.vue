@@ -21,7 +21,8 @@
                                                   class="attrs">{{item.name}}/</span><br>
                 <span class="p1">类型: </span><span v-for="item in movieDetail.genres" class="attrs">{{item}}/</span><br>
                 <span class="p1">制片国家/地区: </span><span v-for="(item,index) in movieDetail.countries" class="attrs">{{item}}</span><br>
-                <span class="p1">标签: </span><span v-for="(item,index) in movieDetail.tags" class="attrs">{{item}}/</span><br>
+                <span class="p1">标签: </span><span v-for="(item,index) in movieDetail.tags"
+                                                  class="attrs">{{item}}/</span><br>
 
               </div>
             </div>
@@ -41,13 +42,13 @@
           <div class="insterest-people">
             <div class="top">
               <a href="">
-                <button>想看</button>
+                <button>收藏</button>
               </a>
-              <a href="">
+              <!--<a href="">
                 <button>看过</button>
-              </a>
+              </a>-->
               <span class="score-to">评价:
-                <el-rate show-text></el-rate>
+                <el-rate show-text v-model="user_rate" @change="saveScore()"></el-rate>
                 </span>
             </div>
           </div>
@@ -62,9 +63,9 @@
               <li><img
                 src="https://img3.doubanio.com/f/shire/61cc48ba7c40e0272d46bb93fe0dc514f3b71ec5/pics/add-doulist.gif"
                 alt=""><a href="">提问题</a></li>
-            <!--  <li><img
-                src="https://img3.doubanio.com/f/shire/61cc48ba7c40e0272d46bb93fe0dc514f3b71ec5/pics/add-doulist.gif"
-                alt=""><a href="">添加到豆列</a></li>-->
+              <!--  <li><img
+                  src="https://img3.doubanio.com/f/shire/61cc48ba7c40e0272d46bb93fe0dc514f3b71ec5/pics/add-doulist.gif"
+                  alt=""><a href="">添加到豆列</a></li>-->
               <li><img src="" alt=""><a href="">分享到</a></li>
             </ul>
           </div>
@@ -90,7 +91,9 @@
   export default {
     name: 'moviesDetail',
     data () {
-      return {}
+      return {
+        user_rate: null
+      }
     },
     mounted () {
       let id = this.$route.query.id
@@ -99,6 +102,10 @@
       this.$store.commit('MOVING_ID', {id})
       console.log('moviesDetail getter id ---- ' + this.$store.getters.id)
       this.$store.dispatch('getMovieDetail')
+      this.$store.dispatch('getMovieScore').then(() => {
+        this.user_rate = this.$store.getters.userRate
+        console.log('rate --- ' + this.user_rate)
+      })
     },
     components: {
       'movieComment': (resolve) => {
@@ -116,6 +123,11 @@
     methods: {
       getImageUrl (url) {
         return '//images.weserv.nl/?url=' + url
+      },
+      saveScore () {
+        let rate = this.user_rate
+        this.$store.commit('userRate', {userRate: rate})
+        this.$store.dispatch('saveUserRate')
       }
     }
   }

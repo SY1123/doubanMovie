@@ -35,7 +35,7 @@
             <el-input type="password" v-model="registerForm.checkPass" autocomplete="off"></el-input>
           </el-form-item>
           <el-form-item label="email" prop="email">
-            <el-input v-model.number="registerForm.email"></el-input>
+            <el-input v-model="registerForm.email"></el-input>
           </el-form-item>
           <el-form-item>
             <el-button type="primary" @click="register('registerForm')">提交</el-button>
@@ -147,10 +147,13 @@
       register (formName) {
         this.$refs[formName].validate((valid) => {
           if (valid) {
+            console.log('register --------- ' + this.registerForm.email)
             this.$store.commit('USERNAME', {username: this.registerForm.name})
             this.$store.commit('PASSWORD', {password: this.registerForm.pass})
             this.$store.commit('EMAIL', {email: this.registerForm.email})
-            this.$store.dispatch('userRegister')
+            this.$store.dispatch('userRegister').then(() => {
+              this.registerVisible = this.$store.getters.registerVisible
+            })
           } else {
             console.log('error submit!!')
             return false
@@ -198,7 +201,9 @@
         this.$store.commit('choiceInterestTag', {choiceInterestTag: this.interestTags})
       },
       saveInterest () {
-        this.$store.dispatch('saveUserInterestTag')
+        this.$store.dispatch('saveUserInterestTag').then(() => {
+          this.tagVisible = this.$store.getters.tagVisible
+        })
       }
     }
   }

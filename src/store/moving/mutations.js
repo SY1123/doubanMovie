@@ -89,5 +89,9 @@ export const mutations = {
   },
   [types.choiceInterestTag] (state, {choiceInterestTag}) {
     state.choiceInterestTag = choiceInterestTag
+  },
+  [types.userRate] (state, {userRate}) {
+    state.userRate = userRate
   }
+
 }
