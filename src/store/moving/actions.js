@@ -256,5 +256,16 @@ export const actions = {
       console.log(res)
       commit('userRate', {userRate: res.data})
     })
+  },
+  /**
+   * 收藏到收藏夹
+   * @param commit
+   * @param state
+   */
+  addToFavo ({commit, state}) {
+    return javaUtils.get('/movie/save_favorite', {userId: state.userId, movieId: state.id}).then(res => {
+      console.log(res)
+      commit('userRate', {userRate: res.data})
+    })
   }
 }

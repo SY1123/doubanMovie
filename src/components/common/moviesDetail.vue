@@ -42,7 +42,7 @@
           <div class="insterest-people">
             <div class="top">
               <a href="">
-                <button>收藏</button>
+                <button @click="addToFavorite()">收藏</button>
               </a>
               <!--<a href="">
                 <button>看过</button>
@@ -128,6 +128,9 @@
         let rate = this.user_rate
         this.$store.commit('userRate', {userRate: rate})
         this.$store.dispatch('saveUserRate')
+      },
+      addToFavorite () {
+        this.$store.dispatch('addToFavo')
       }
     }
   }
