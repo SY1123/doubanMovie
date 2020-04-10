@@ -29,7 +29,7 @@
       </p>-->
       <p class="rate">
         <el-rate
-          v-model="subject.rate"
+          v-model="subject.rate * 2"
           disabled
           text-color="#ff9900">
         </el-rate>

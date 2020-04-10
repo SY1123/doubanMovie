@@ -164,9 +164,11 @@ export const actions = {
         commit('USERNAME', {username: state.username})
         commit('isLogin', {isLogin: 1})
         commit('userId', {userId: res.data.id})
-        console.log('user -- ' + res.data + res.data.token)
+        console.log('user id -- ' + res.data.id)
         commit('loginVisible', {loginVisible: false})
         window.localStorage.setItem('token', res.data.token)
+        window.localStorage.setItem('userid', res.data.id)
+        window.localStorage.setItem('username', state.username)
       }
       return null
     })
@@ -239,6 +241,7 @@ export const actions = {
       alert('请登录')
       return
     }
+    console.log('saveUserRate  ' + state.userId)
     console.log(state.userId)
     console.log(state.id)
     console.log(state.userRate)

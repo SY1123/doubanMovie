@@ -47,9 +47,33 @@
     <div v-else>
       <div class="bd">
         <div class="top-nav-info">
-          {{this.$store.getters.username}},欢迎登录
+          {{this.$store.getters.username}},欢迎登录, </div>
+        <div class="top-nav-info">
+          <a class="nav-login" rel="nofollow" @click="registerVisible = true">注册</a>
         </div>
+        <el-dialog title="注册" :visible.sync="registerVisible">
+          <el-form :model="registerForm" status-icon :rules="rules" ref="registerForm" label-width="80px"
+                   class="registerForm">
+            <el-form-item label="用户名" prop="name">
+              <el-input v-model.number="registerForm.name"></el-input>
+            </el-form-item>
+            <el-form-item label="密码" prop="pass">
+              <el-input type="password" v-model="registerForm.pass" autocomplete="off"></el-input>
+            </el-form-item>
+            <el-form-item label="确认密码" prop="checkPass">
+              <el-input type="password" v-model="registerForm.checkPass" autocomplete="off"></el-input>
+            </el-form-item>
+            <el-form-item label="email" prop="email">
+              <el-input v-model="registerForm.email"></el-input>
+            </el-form-item>
+            <el-form-item>
+              <el-button type="primary" @click="register('registerForm')">提交</el-button>
+              <el-button @click="resetForm('registerForm')">重置</el-button>
+            </el-form-item>
+          </el-form>
+        </el-dialog>
       </div>
+
     </div>
     <el-dialog class="tag_style" title="请选择您感兴趣的标签" :visible.sync="tagVisible">
       <el-tag style="margin-right: 10px"
@@ -142,6 +166,18 @@
         this.tags = this.$store.getters.tags
         console.log('tag----' + this.$store.getters.tags)
       })
+      let token = window.localStorage.getItem('token')
+      let username = window.localStorage.getItem('username')
+      let userid = window.localStorage.getItem('userid')
+      console.log('window localstorage -- id name' + userid + username)
+      if (JSON.stringify(token) !== '{}' && Object.keys(token).length !== 0 &&
+    JSON.stringify(userid) !== '{}' && Object.keys(userid).length !== 0
+      ) {
+        this.$store.getters.isLogin === 0
+        this.$store.commit('USERNAME', {username: username})
+        this.$store.commit('isLogin', {isLogin: 1})
+        this.$store.commit('userId', {userId: userid})
+      }
     },
     methods: {
       register (formName) {
@@ -191,11 +227,9 @@
         this.$store.dispatch('findTags')
         setTimeout(_ => {
           this.tags = this.$store.getters.tags
-          console.log('tag----' + this.$store.getters.tags)
         }, 500)
       },
       choiceTag (tag) {
-        console.log('choice tag --- ' + tag.info)
         this.interestTags.push(tag)
         console.log(this.interestTags)
         this.$store.commit('choiceInterestTag', {choiceInterestTag: this.interestTags})

@@ -22,12 +22,20 @@ Vue.http.interceptors.push((request, next) => {
 })
 
 router.beforeEach((to, from, next) => {
+  let token = window.localStorage.getItem('token')
+  let userid = window.localStorage.getItem('userid')
+  console.log('beforeEach --- ' + token)
+  console.log('userid --- ' + userid)
+  console.log(to.meta.requireAuth)
   if (to.meta.requireAuth) {
-    if (window.sessionStorage.token) {
-      console.log(window.sessionStorage)
+    console.log('beforeEach 登陆 --- ' + token)
+    if (JSON.stringify(token) !== null || Object.keys(token).length !== 0) {
+      console.log('token -- ' + token)
+      console.log('session storage -- ' + window.sessionStorage)
     } else {
       alert('请登录')
-      next('/components/moving')
+      console.log('please login in')
+      next('/')
     }
   } else {
     next()

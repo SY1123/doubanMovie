@@ -41,9 +41,7 @@
           </div>
           <div class="insterest-people">
             <div class="top">
-              <a href="">
-                <button @click="addToFavorite()">收藏</button>
-              </a>
+                <el-button @click="addToFavorite()">收藏</el-button>
               <!--<a href="">
                 <button>看过</button>
               </a>-->
@@ -104,7 +102,7 @@
       this.$store.dispatch('getMovieDetail')
       this.$store.dispatch('getMovieScore').then(() => {
         this.user_rate = this.$store.getters.userRate
-        console.log('rate --- ' + this.user_rate)
+        console.log('get rate --- ' + this.user_rate)
       })
     },
     components: {
